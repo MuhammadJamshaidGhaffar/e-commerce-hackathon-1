@@ -43,10 +43,10 @@ export default function Navbar() {
       aria-label="Search"
       aria-describedby="button-addon1" />
   </div>
-  <div className='relative'>
+  <Link href="/cart" className='relative'>
     <BiCart size={50} className='bg-gray-200 rounded-full p-2'/>
     <div className='absolute top-0 right-0 bg-red-500 rounded-full w-5 h-5 text-white flex justify-center items-center'>2</div>
-  </div>
+  </Link>
   </div>
     </nav>
 </header>

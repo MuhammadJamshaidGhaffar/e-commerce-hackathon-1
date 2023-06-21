@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import Main_Section from './Main_Section'
-import Footer from './Footer'
 import Section2 from './Section2'
 import Section3 from './Section3'
+import Section4 from './Section4'
+import Section5 from './Section5'
 
 export default function Home() {
   return (
@@ -10,7 +11,8 @@ export default function Home() {
       <Main_Section />
       <Section2 />
       <Section3 />
-      <Footer />
+      <Section4 />
+      <Section5 />
     </div>
   )
 }

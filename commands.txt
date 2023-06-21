@@ -1,0 +1,7 @@
+---------------- redux setup -----------------------------
+https://blog.logrocket.com/use-redux-next-js/
+
+npm install @reduxjs/toolkit react-redux
+
+
+----------------------------------------------------------
