@@ -10,7 +10,7 @@ import dress_7 from "@images/dress_7.png"
 
 export type sizesType = "xs"| "s" | "m" | "l" | "xl";
 
-export type product = {
+export type Product = {
     id : string;
     name : string;
     price : number;
@@ -21,9 +21,15 @@ export type product = {
     detail : string;
 }
 
-export type productRequired = Required<product>;
+export type ProductRequired = Required<Product>;
 
-export const products : product[] = [
+export type CartItem = {
+   id : string;
+   quantity: number;
+   size: sizesType;
+}
+
+export const products : Product[] = [
  {
     id: "1",
     name : "Shalwar Qameez",

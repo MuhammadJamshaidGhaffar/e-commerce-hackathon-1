@@ -1,9 +1,9 @@
 import React from 'react'
 import { Separator } from "@/components/ui/separator"
-import { product } from '@/data/products'
+import { Product } from '@/data/products'
 
 
-export default function ProductInformation({product} : {product : product}) {
+export default function ProductInformation({product} : {product : Product}) {
   return (
     <div className='w-2/3 mx-auto bg-white px-20 py-20 mt-20'>
         <div className='w-full h-36 relative flex items-center'>

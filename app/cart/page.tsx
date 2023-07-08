@@ -1,51 +1,62 @@
 'use client'
 
-import { product } from '@/data/products'
+import { Product, ProductRequired, products } from '@/data/products'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
+import { Metadata } from 'next'
 
 import dress_1 from "@images/dress_1.png"
 
 import {MdDelete} from "react-icons/md"
+import { convertCartToCartProducts, getAllItemsFromCart, saveCart } from './cartFunctions'
 import QuantitySetter from '../product/[productId]/quantitySetter'
 
-const cart : Required<product>[] = [{
-    id: "1",
-    name : "Shalwar Qameez",
-    price : 100,
-    category : "dress",
-    images: [dress_1.src],
-    detail:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    quantity:3,
-    size:"m" 
-},]
 
 export default function page() {
+    const cartItems = getAllItemsFromCart();
+    const cartProducts  = convertCartToCartProducts(cartItems);
+    const [state , updateState ] = useState(0);
+
+
   return (
     <div>
         <h1>Shopping Cart</h1>
         <div>
             <div>
             {
-                cart.map(item => <div>
-                        <Image src={item.images[0]} width={100} height={100} alt={item.name} /> 
-                        <div className='flex'>
-                            <p>{item.name}</p>
-                            <MdDelete />
-                        </div>
-                        <p>{item.category}</p>
-                        <p>Delivery Estimation</p>
-                        <p>5 working days</p>
-                        <div className='flex'>
-                            <p>{item.price}</p>
-                            <QuantitySetter getQuantity={()=>item.quantity} negativeFunc={()=>{
-                                if(item.quantity>1)
-                                    item.quantity -= 1;
-                            }} 
-                            postiveFunc={()=>{
-                                item.quantity += 1;
-                            }}
-                            />
+                cartProducts.map((item , index )=> 
+                <div className='flex '>
+                        <Image src={item.images[0]} width={100} height={100} alt={item.name} className='bg-gray-200'  style={{width:"180px", height:"220px"}}/> 
+                        <div>
+                            <div className='flex'>
+                                <p className='text-2xl '>{item.name}</p>
+                                <MdDelete />
+                            </div>
+                            <p className='text-xl font-bold text-gray-400'>{item.category}</p>
+                            <p className='text-xl font-semibold'>Delivery Estimation</p>
+                            <p>5 working days</p>
+                            <div className='flex'>
+                                <p>{item.price}</p>
+                                <QuantitySetter getQuantity={()=>cartProducts[index].quantity} negativeFunc={()=>{
+                                    if(item.quantity>1){
+                                        item.quantity -= 1;
+                                        cartItems[index].quantity =- 1;
+                                        saveCart(cartItems);
+                                    }
+                                    else{
+                                        cartItems.splice(index,1);
+                                        saveCart(cartItems);
+                                        updateState(state+1);
+                                    }
+                                    
+                                }} 
+                                postiveFunc={()=>{
+                                    item.quantity += 1;
+                                    cartItems[index].quantity += 1;
+                                    saveCart(cartItems);
+                                }}
+                                />
+                            </div>
                         </div>
                     </div>
                 )
@@ -59,3 +70,10 @@ export default function page() {
     </div>
   )
 }
+
+
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+      title: "cart",
+    }
+  }

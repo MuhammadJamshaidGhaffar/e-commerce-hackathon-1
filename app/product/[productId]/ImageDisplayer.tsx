@@ -1,24 +1,27 @@
 'use client'
 
 import { Button } from '@/components/ui/button';
-import { product, sizesType } from '@/data/products'
+import { CartProduct, Product, sizesType } from '@/data/products'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { BiCart } from 'react-icons/bi';
 import QuantitySetter from './quantitySetter';
+import { addItemToCart } from '@/app/cart/cartFunctions';
 
 
 const sizes : sizesType[] = ["xs" , "s" , "m" , "l" , "xl"];
 
-export default function ImageDisplayer({product} : {product : product}) {
+export default function ImageDisplayer({product} : {product : Product}) {
     const [currentImageIndex , setCurrentImageIndex] = useState(0);
     const [activeSize , setActiveSize ]= useState<sizesType>("s");
     const [quantity , setQuantity] = useState(1);
     console.log("Displaying images" , product);
 
-    sessionStorage.setItem('cart' , []);
-    const cart = sessionStorage.getItem('cart');
-    console.log("cart   :   " , cart);
+    // sessionStorage.setItem('cart' , JSON.[]);
+    // const cart = sessionStorage.getItem('cart');
+    // console.log("cart   :   " , cart);
+
+    
 
     return <div className='grid grid-cols-8 container'>
           <div>
@@ -54,7 +57,10 @@ export default function ImageDisplayer({product} : {product : product}) {
                 />
             </div> 
             <div className='mt-10'>
-                <Button size="lg" className='text-xl py-7'><BiCart size={30} /> Add to Cart</Button> <span className='ml-5 text-3xl font-semibold'>${product.price}</span>
+                <Button size="lg" className='text-xl py-7' onClick={()=>{
+                    addItemToCart({id:product.id , size: activeSize, quantity:quantity })
+                    console.log(sessionStorage.getItem('cart'));
+                }}><BiCart size={30} /> Add to Cart</Button> <span className='ml-5 text-3xl font-semibold'>${product.price}</span>
 
             </div>
           </div>

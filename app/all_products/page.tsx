@@ -12,6 +12,7 @@ export default function page() {
 // const cart = useSelector(selectCart);
 // console.log(cart);
 
+
   return (
     <section className='container flex flex-wrap'>
         {
