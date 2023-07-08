@@ -1,24 +1,23 @@
-import {  productRequired } from "@/data/products"
+import {  CartItem, ProductRequired } from "@/data/products"
 import {createSlice} from "@reduxjs/toolkit"
 import { AppState } from "./store";
-
-const initialState : productRequired[] = [];
+const initialState : CartItem[] = [];
 
 export const cartSlice = createSlice({
     initialState,
     name:"cart",
     reducers:{
-        AddProduct(state ,{payload} :{payload : productRequired} ){
-           const productIndex = state.findIndex(p => p.id == payload.id);
+        AddProduct(state ,{payload} :{payload : CartItem} ){
+           const productIndex = state.findIndex(p => p.id == payload.id && p.size == payload.size);
            if(productIndex == -1){
                 state.push(payload);
            }
            else{
-                state[productIndex] = payload;
+                state[productIndex].quantity += payload.quantity;
            }
         },
-        RemoveProduct(state , {payload:productIndex} : {payload:string}){
-            state = state.filter(p => p.id != productIndex);
+        RemoveProduct(state , {payload:productId} : {payload:string}){
+            state = state.filter(p => p.id != productId);
         },
     }
 });

@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react'
 
-export default function QuantitySetter({getQuantity , negativeFunc , postiveFunc}:{getQuantity:()=>number ; negativeFunc:()=>void ; postiveFunc:()=>void}) {
+export default function QuantitySetter({getQuantity , negativeFunc , postiveFunc , style }:{getQuantity:()=>number ; negativeFunc:()=>void ; postiveFunc:()=>void ; style ?: any} ) {
   const [state,reRender] = useState(0);
   console.log(`New quantity: ${getQuantity()}`);
   return (
-    <div className='flex'>
+    <div className='flex' style={style || {}}>
         <button className='rounded-full w-10 h-10 cursor-pointer flex justify-center items-center text-4xl text-gray-600 bg-gray-200' onClick={()=>{
           negativeFunc();
           reRender(state+1);

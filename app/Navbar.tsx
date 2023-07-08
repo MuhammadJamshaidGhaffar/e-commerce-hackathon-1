@@ -1,7 +1,10 @@
 'use client'
 import Link from 'next/link';
-import React from 'react'
+import React, { useContext, useRef } from 'react'
 import {BiCart} from "react-icons/bi"
+import { getAllItemsFromCart } from './cart/cartFunctions';
+import { selectCart } from './(store)/cartSlice';
+import { useDispatch, useSelector } from "react-redux";
 
 export type navLink = {
     title:string;
@@ -11,6 +14,9 @@ export type navLink = {
 const navLinks : navLink[] = [{title:"Female" , url:"/female"} , {title:"Male" , url:"/male"}, {title:"Kids" , url:"/kids"} , {title:"All products" , url:"/all_products"}]
 
 export default function Navbar() {
+
+  const cart =  useSelector(selectCart)
+
   return (
     <header className="text-gray-600">
   {/* <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"> */}
@@ -44,8 +50,8 @@ export default function Navbar() {
       aria-describedby="button-addon1" />
   </div>
   <Link href="/cart" className='relative'>
-    <BiCart size={50} className='bg-gray-200 rounded-full p-2'/>
-    <div className='absolute top-0 right-0 bg-red-500 rounded-full w-5 h-5 text-white flex justify-center items-center'>2</div>
+    <BiCart size={50} className='bg-gray-200 rounded-full p-2' />
+    <div className='absolute top-0 right-0 bg-red-500 rounded-full w-5 h-5 text-white flex justify-center items-center' >{cart.length}</div>
   </Link>
   </div>
     </nav>

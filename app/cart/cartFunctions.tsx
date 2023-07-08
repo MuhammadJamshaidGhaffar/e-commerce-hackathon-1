@@ -54,3 +54,5 @@ export function addItemToCart(cartItem : CartItem){
   export function saveCart(cart:CartItem[]){
     sessionStorage.setItem('cart' , JSON.stringify(cart));
   }
+
+  

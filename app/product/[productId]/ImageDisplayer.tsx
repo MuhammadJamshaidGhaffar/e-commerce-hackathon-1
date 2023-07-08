@@ -3,10 +3,12 @@
 import { Button } from '@/components/ui/button';
 import { CartProduct, Product, sizesType } from '@/data/products'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { BiCart } from 'react-icons/bi';
 import QuantitySetter from './quantitySetter';
-import { addItemToCart } from '@/app/cart/cartFunctions';
+import { addItemToCart, getAllItemsFromCart } from '@/app/cart/cartFunctions';
+import {useDispatch} from "react-redux"
+import { AddProduct } from '@/app/(store)/cartSlice';
 
 
 const sizes : sizesType[] = ["xs" , "s" , "m" , "l" , "xl"];
@@ -21,6 +23,8 @@ export default function ImageDisplayer({product} : {product : Product}) {
     // const cart = sessionStorage.getItem('cart');
     // console.log("cart   :   " , cart);
 
+    const dispatch = useDispatch();
+    
     
 
     return <div className='grid grid-cols-8 container'>
@@ -58,8 +62,8 @@ export default function ImageDisplayer({product} : {product : Product}) {
             </div> 
             <div className='mt-10'>
                 <Button size="lg" className='text-xl py-7' onClick={()=>{
-                    addItemToCart({id:product.id , size: activeSize, quantity:quantity })
-                    console.log(sessionStorage.getItem('cart'));
+                    addItemToCart({id:product.id , size: activeSize, quantity:quantity });
+                    dispatch(AddProduct({id:product.id , size: activeSize, quantity:quantity }));
                 }}><BiCart size={30} /> Add to Cart</Button> <span className='ml-5 text-3xl font-semibold'>${product.price}</span>
 
             </div>
